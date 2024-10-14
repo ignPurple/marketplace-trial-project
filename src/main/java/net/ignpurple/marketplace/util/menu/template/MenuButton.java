@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack;
 
 @Section
 public class MenuButton {
-    @SectionName()
+    @SectionName
     private String name;
     private String identifier;
     private ItemStack item;

@@ -173,6 +173,10 @@ public abstract class Menu<T> implements InventoryHolder {
     }
 
     public void executeAction(MenuAction action, Runnable callback) {
+        if (this.currentAction != null) {
+            return;
+        }
+
         final Runnable finalCallback = () -> {
             this.currentAction = null;
             if (callback != null) {
