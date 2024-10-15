@@ -24,6 +24,36 @@ public class MenuConfig {
             MenuButton.builder()
                 .name("background")
                 .identifier("$")
+                .item(ItemBuilder.create(Material.ORANGE_STAINED_GLASS_PANE).name("&7").build())
+                .build()
+        ).button(
+            MenuButton.builder()
+                .name("previous-page")
+                .identifier("<")
+                .item(ItemBuilder.create(Material.ARROW).name("&7Previous Page").build())
+                .build()
+        ).button(
+            MenuButton.builder()
+                .name("next-page")
+                .identifier(">")
+                .item(ItemBuilder.create(Material.ARROW).name("&7Next Page").build())
+                .build()
+        ).build();
+
+    @FieldVersion(1)
+    private final MenuTemplate marketplaceMenu = MenuTemplate.builder()
+        .title("&4&lMarketplace")
+        .design(
+            "$$$$$$$$$",
+            "$_______$",
+            "$_______$",
+            "$_______$",
+            "$_______$",
+            "<$$$$$$$>"
+        ).button(
+            MenuButton.builder()
+                .name("background")
+                .identifier("$")
                 .item(ItemBuilder.create(Material.RED_STAINED_GLASS_PANE).name("&7").build())
                 .build()
         ).button(
@@ -50,11 +80,28 @@ public class MenuConfig {
             "&eItem: &f%item_name%"
         ).build();
 
+    @FieldVersion(1)
+    private ItemStack marketplaceItem = ItemBuilder.create(Material.STONE)
+        .name("&f%item_name%")
+        .lore(
+            "&eCost: &2$&a%cost%",
+            "&eAmount: &6%amount%x",
+            "&eSeller: &f%seller%"
+        ).build();
+
     public MenuTemplate getTransactionsMenu() {
         return this.transactionsMenu;
     }
 
+    public MenuTemplate getMarketplaceMenu() {
+        return this.marketplaceMenu;
+    }
+
     public ItemStack getTransactionItem() {
         return this.transactionItem;
+    }
+
+    public ItemStack getMarketplaceItem() {
+        return this.marketplaceItem;
     }
 }

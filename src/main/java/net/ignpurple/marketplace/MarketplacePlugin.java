@@ -1,5 +1,7 @@
 package net.ignpurple.marketplace;
 
+import net.ignpurple.marketplace.command.MarketplaceCommand;
+import net.ignpurple.marketplace.command.TransactionsCommand;
 import net.ignpurple.marketplace.config.MarketplaceConfig;
 import net.ignpurple.marketplace.config.MenuConfig;
 import net.ignpurple.marketplace.config.mongo.MongoDBConfigSettings;
@@ -31,9 +33,9 @@ public class MarketplacePlugin extends JavaPlugin implements Listener {
     public void onEnable() {
         this.initConfig();
         this.initDatabase();
+        this.initCommands();
+        this.initListeners();
 
-        this.getServer().getPluginManager().registerEvents(new MenuListener(), this);
-        this.getServer().getPluginManager().registerEvents(this, this);
     }
 
     public ConfigManager getConfigManager() {
@@ -61,19 +63,12 @@ public class MarketplacePlugin extends JavaPlugin implements Listener {
         throw new IllegalStateException("No database selected for Marketplace, disabling plugin.");
     }
 
-    @EventHandler
-    public void onClick(PlayerInteractEvent event) {
-        System.out.println("Interacted");
-        if (event.getAction() == Action.LEFT_CLICK_AIR && event.getHand() == EquipmentSlot.HAND) {
-            this.database.addTransaction(
-                event.getPlayer().getUniqueId(),
-                System.currentTimeMillis(),
-                BigDecimal.valueOf(ThreadLocalRandom.current().nextDouble(100, 10000)),
-                "Item name #" + ThreadLocalRandom.current().nextInt(0, 100)
-            );
-            return;
-        }
+    private void initCommands() {
+        this.getServer().getPluginCommand("marketplace").setExecutor(new MarketplaceCommand(this));
+        this.getServer().getPluginCommand("transactions").setExecutor(new TransactionsCommand(this));
+    }
 
-        new TransactionsMenu(event.getPlayer(), this, this.configManager.getConfig(MenuConfig.class).getTransactionsMenu()).open();
+    private void initListeners() {
+        this.getServer().getPluginManager().registerEvents(new MenuListener(), this);
     }
 }

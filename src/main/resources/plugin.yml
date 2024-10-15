@@ -2,3 +2,8 @@ name: Marketplace
 version: 1.0.0
 api-version: 1.20
 main: net.ignpurple.marketplace.MarketplacePlugin
+commands:
+  marketplace:
+    description: Displays a list of all items current for sale in the marketplace.
+  transactions:
+    description: Displays the player's transaction history.
